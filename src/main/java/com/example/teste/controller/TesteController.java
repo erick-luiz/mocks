@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.teste.controller;
 
 import javax.validation.Valid;
 
