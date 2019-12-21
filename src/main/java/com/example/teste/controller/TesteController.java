@@ -21,6 +21,19 @@ public class TesteController {
 		return request;
 	}
 	
+	@PostMapping("/{mkt}")
+	public Object createUpdateProduct(@RequestBody Object request, @PathVariable("mkt") String mkt) {
+		dados = request;
+		return request;
+	}
+	
+	@PostMapping("/{mkt}/{sellerId}")
+	public Object createUpdateProduct(@RequestBody Object request, @PathVariable("mkt") String mkt, @PathVariable("sellerId") String seller) {
+		dados = request;
+		return request;
+	}
+	
+	
 	@GetMapping()
 	public Object get() {
 		return dados;
