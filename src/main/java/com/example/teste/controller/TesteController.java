@@ -1,5 +1,6 @@
 package com.example.teste.controller;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -24,20 +25,24 @@ public class TesteController {
 	@PostMapping()
 	public ResponseEntity<?> createUpdateProduct(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
 			@RequestHeader Map<String,String> allRequestHeader) {
+		fillDataRequest(request, allRequestParams, allRequestHeader, "");
+		return ResponseEntity.status(201).body("");
+	}
+
+	private void fillDataRequest(Object request, Map<String, String> allRequestParams,
+			Map<String, String> allRequestHeader, String path) {
 		dados.setBody(request);
 		dados.setParams(allRequestParams.toString());
 		dados.setHeaders(allRequestHeader.toString());
-		return ResponseEntity.status(201).body("");
+		dados.setData(LocalDateTime.now());
+		dados.setPath(path);
 	}
 	
 	@PostMapping("/{mkt}")
 	public ResponseEntity<?> createUpdateProduct1(@RequestBody Object request, @PathVariable("mkt") String mkt, 
 			@RequestParam Map<String,String> allRequestParams,
 			@RequestHeader Map<String,String> allRequestHeader) {
-		dados.setBody(request);
-		dados.setPath(mkt);
-		dados.setParams(allRequestParams.toString());
-		dados.setHeaders(allRequestHeader.toString());
+		fillDataRequest(request, allRequestParams, allRequestHeader, mkt);
 		return ResponseEntity.status(201).body("");
 	}
 	
@@ -45,10 +50,7 @@ public class TesteController {
 	public Object createUpdateProduct2(@RequestBody Object request, @PathVariable("mkt") String mkt, @PathVariable("sellerId") String seller, 
 			@RequestParam Map<String,String> allRequestParams,
 			@RequestHeader Map<String,String> allRequestHeader) {
-		dados.setBody(request);
-		dados.setPath(mkt + "/" + seller); 
-		dados.setParams(allRequestParams.toString());
-		dados.setHeaders(allRequestHeader.toString());
+		fillDataRequest(request, allRequestParams, allRequestHeader, mkt + "/" + seller);
 		return ResponseEntity.status(201).body("");
 	}
 

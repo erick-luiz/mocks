@@ -1,5 +1,7 @@
 package com.example.teste.model;
 
+import java.time.LocalDateTime;
+
 public class Saida {
 
 	private int code = 200;
@@ -7,6 +9,9 @@ public class Saida {
 	private String headers;
 	private String path;
 	private Object body;
+	private String data;
+	
+	
 
 	public int getCode() {
 		return code;
@@ -46,6 +51,14 @@ public class Saida {
 
 	public void setHeaders(String headers) {
 		this.headers = headers;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data.toString();
 	}
 
 }
