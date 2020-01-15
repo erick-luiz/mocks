@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.ArrayList;
+
+
 import com.example.teste.model.Saida;
 
 @RestController
@@ -20,7 +24,7 @@ import com.example.teste.model.Saida;
 public class TesteController {
 	
 	
-	public static Saida dados = new Saida();
+	public static List<Saida> dados = new ArrayList<>();
 	
 	@PostMapping()
 	public ResponseEntity<?> createUpdateProduct(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
@@ -31,11 +35,13 @@ public class TesteController {
 
 	private void fillDataRequest(Object request, Map<String, String> allRequestParams,
 			Map<String, String> allRequestHeader, String path) {
-		dados.setBody(request);
-		dados.setParams(allRequestParams.toString());
-		dados.setHeaders(allRequestHeader.toString());
-		dados.setData(LocalDateTime.now());
-		dados.setPath(path);
+		Saida out =  new Saida();
+		out.setBody(request);
+		out.setParams(allRequestParams.toString());
+		out.setHeaders(allRequestHeader.toString());
+		out.setData(LocalDateTime.now());
+		out.setPath(path);
+		dados.add(out);
 	}
 	
 	@PostMapping("/{mkt}")
@@ -55,7 +61,7 @@ public class TesteController {
 	}
 
 	@GetMapping()
-	public Object get() {
+	public List<Saida> get() {
 		return dados;
 	}
 	
