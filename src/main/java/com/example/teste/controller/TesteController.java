@@ -59,6 +59,14 @@ public class TesteController {
 		fillDataRequest(request, allRequestParams, allRequestHeader, mkt + "/" + seller);
 		return ResponseEntity.status(201).body("");
 	}
+	
+	@PostMapping("/pvt/orders/{orderId}/cancel")
+	public Object createUpdateProduct3(@RequestBody Object request, @PathVariable("orderId") String orderId,
+			@RequestParam Map<String,String> allRequestParams,
+			@RequestHeader Map<String,String> allRequestHeader) {
+		fillDataRequest(request, allRequestParams, allRequestHeader, orderId + "/");
+		return ResponseEntity.status(201).body("");
+	}
 
 	@GetMapping()
 	public List<Saida> get() {
