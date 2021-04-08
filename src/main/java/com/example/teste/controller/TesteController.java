@@ -27,14 +27,14 @@ public class TesteController {
 	
 	public static List<Saida> dados = new ArrayList<>();
 	
-	@PostMapping({"/", "/{mkt}", "/{mkt}/{sellerId}"})
+	@PostMapping()
 	public ResponseEntity<?> createUpdateProduct(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
 			@RequestHeader Map<String,String> allRequestHeader) {
 		fillDataRequest(request, allRequestParams, allRequestHeader, "");
 		return ResponseEntity.status(201).body("");
 	}
 	
-	@PutMapping()
+	@PutMapping({"/", "/{mkt}", "/{mkt}/{sellerId}"})
 	public ResponseEntity<?> createUpdateProduct(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
 			@RequestHeader Map<String,String> allRequestHeader) {
 		fillDataRequest(request, allRequestParams, allRequestHeader, "");
