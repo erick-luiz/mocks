@@ -10,6 +10,7 @@ public class Saida {
 	private String path;
 	private Object body;
 	private String data;
+	private String method;
 	
 	
 
@@ -59,6 +60,14 @@ public class Saida {
 
 	public void setData(LocalDateTime data) {
 		this.data = data.toString();
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
 	}
 
 }

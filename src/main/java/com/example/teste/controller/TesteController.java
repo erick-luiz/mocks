@@ -1,6 +1,8 @@
 package com.example.teste.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.ArrayList;
-
-
 import com.example.teste.model.Saida;
 
 @RestController
@@ -27,56 +25,33 @@ public class TesteController {
 	
 	public static List<Saida> dados = new ArrayList<>();
 	
-	@PostMapping()
-	public ResponseEntity<?> createUpdateProduct(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
-			@RequestHeader Map<String,String> allRequestHeader) {
-		fillDataRequest(request, allRequestParams, allRequestHeader, "");
+	@PostMapping({"/**","/{1}","/{1}/{2}","/{1}/{2}/{3}","/{1}/{2}/{3}/{4}"})
+	public ResponseEntity<?> postRequest(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
+			@RequestHeader Map<String,String> allRequestHeader,  @PathVariable Map<String, String> pathVarsMap) {
+		fillDataRequest(request, allRequestParams, allRequestHeader, pathVarsMap.toString(), "POST");
 		return ResponseEntity.status(201).body("");
 	}
 	
-	@PutMapping({"/", "/{mkt}", "/{mkt}/{sellerId}"})
-	public ResponseEntity<?> createUpdateProduct(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
-			@RequestHeader Map<String,String> allRequestHeader) {
-		fillDataRequest(request, allRequestParams, allRequestHeader, "");
+	@PutMapping({"/**","/{1}","/{1}/{2}","/{1}/{2}/{3}","/{1}/{2}/{3}/{4}"})
+	public ResponseEntity<?> putRequest(@RequestBody Object request, @RequestParam Map<String,String> allRequestParams,
+			@RequestHeader Map<String,String> allRequestHeader, @PathVariable Map<String, String> pathVarsMap) {
+		fillDataRequest(request, allRequestParams, allRequestHeader, pathVarsMap.toString(), "PUT");
 		return ResponseEntity.status(200).body("");
 	}
 
 	private void fillDataRequest(Object request, Map<String, String> allRequestParams,
-			Map<String, String> allRequestHeader, String path) {
+			Map<String, String> allRequestHeader, String path, String method) {
 		Saida out =  new Saida();
 		out.setBody(request);
 		out.setParams(allRequestParams.toString());
 		out.setHeaders(allRequestHeader.toString());
 		out.setData(LocalDateTime.now());
 		out.setPath(path);
+		out.setMethod(method);
 		dados.add(out);
 	}
-	
-	@PostMapping("/{mkt}")
-	public ResponseEntity<?> createUpdateProduct1(@RequestBody Object request, @PathVariable("mkt") String mkt, 
-			@RequestParam Map<String,String> allRequestParams,
-			@RequestHeader Map<String,String> allRequestHeader) {
-		fillDataRequest(request, allRequestParams, allRequestHeader, mkt);
-		return ResponseEntity.status(201).body("");
-	}
-	
-	@PostMapping("/{mkt}/{sellerId}")
-	public Object createUpdateProduct2(@RequestBody Object request, @PathVariable("mkt") String mkt, @PathVariable("sellerId") String seller, 
-			@RequestParam Map<String,String> allRequestParams,
-			@RequestHeader Map<String,String> allRequestHeader) {
-		fillDataRequest(request, allRequestParams, allRequestHeader, mkt + "/" + seller);
-		return ResponseEntity.status(201).body("");
-	}
-	
-	@PostMapping("/pvt/orders/{orderId}/cancel")
-	public Object createUpdateProduct3(@RequestBody Object request, @PathVariable("orderId") String orderId,
-			@RequestParam Map<String,String> allRequestParams,
-			@RequestHeader Map<String,String> allRequestHeader) {
-		fillDataRequest(request, allRequestParams, allRequestHeader, orderId + "/");
-		return ResponseEntity.status(201).body("");
-	}
 
-	@GetMapping()
+	@GetMapping("/**")
 	public List<Saida> get() {
 		return dados;
 	}
